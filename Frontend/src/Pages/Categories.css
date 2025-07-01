@@ -1,0 +1,29 @@
+body{
+    background-color: white;
+}.cate-box{
+    width:100%;
+    min-height:50px;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+}
+.cate-box ul{
+    display: flex;
+    padding: 0;
+    flex-wrap: wrap;
+    
+    
+}
+.cate-box ul li{
+    list-style-type: none;
+    width: 200px;
+    padding: 10px 20px;
+    border:1.9px solid white;
+    text-align: center;
+    cursor: pointer;
+    
+    
+}
+.cate-box ul li:hover{
+    background-color:black ;
+    color: white;
+}

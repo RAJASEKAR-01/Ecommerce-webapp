@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.Home-background {
+  width: 100%;
+  height: 80vh;
+  background-image: url('../../Assets/Home.jpg');
+  border-radius: 20px;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: end;
+  justify-content: baseline;
+}
+
+.Hero-section {
+  margin: 20px;
+  position: relative;
+}
+
+.Hero-content {
+  position: absolute;
+  max-width: 550px;
+  min-width: 300px;
+  
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 0 20px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(2px);
+  border-radius: 10px;
+  
+}
+
+.Hero-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+
+.Hero-content h1 .highlight {
+  color: #FE4C4C;
+}
+
+.Hero-content h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.sub-text {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 10px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* BUTTON STYLES */
+.button-7 {
+  background-color: #FE4C4C;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  width: 180px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.button-7:hover {
+  filter: brightness(1.1);
+  transform: scale(1.02);
+}
+
+.button-7:active {
+  transform: scale(0.96);
+}

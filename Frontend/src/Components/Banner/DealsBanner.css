@@ -1,0 +1,10 @@
+.DealsBanner{
+    height:300px;
+    width:100%;
+    border-radius: 20px;
+    background-image: url('../../Assets/blackfriday.jpg');
+    
+    background-position: center;
+    background-size:contain;
+    background-repeat: no-repeat;
+}

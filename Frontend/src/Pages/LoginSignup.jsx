@@ -1,0 +1,129 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./LoginSignup.css";
+
+function LoginSignup() {
+  const [isLogin, setIsLogin] = useState(true);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
+
+  const [toast, setToast] = useState({ show: false, message: "" });
+  const navigate = useNavigate();
+
+  const toggleForm = () => setIsLogin(!isLogin);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const showToast = (msg) => {
+    setToast({ show: true, message: msg });
+    setTimeout(() => setToast({ show: false, message: "" }), 2000);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!isLogin && formData.password !== formData.confirmPassword) {
+      showToast("Passwords do not match");
+      return;
+    }
+
+    const endpoint = isLogin ? "/login" : "/signup";
+    const data = isLogin
+      ? { email: formData.email, password: formData.password }
+      : {
+          fullName: formData.fullName,
+          email: formData.email,
+          password: formData.password
+        };
+
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/api/auth${endpoint}`,
+        data
+      );
+
+      // ✅ Save user info in localStorage
+      localStorage.setItem("user", JSON.stringify(res.data.user || res.data));
+      
+
+      showToast(isLogin ? "Login successful" : "Signup successful");
+
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+    } catch (error) {
+      showToast(error.response?.data?.message || "Error");
+    }
+  };
+  
+
+  return (
+    <div className="auth-container">
+      <div className={`auth-box ${isLogin ? "fade-in" : "fade-out"}`}>
+        <h2>{isLogin ? "Login to your account" : "Create your account"}</h2>
+        <form onSubmit={handleSubmit}>
+          {!isLogin && (
+            <input
+              type="text"
+              name="fullName"
+              placeholder="Full Name"
+              value={formData.fullName}
+              onChange={handleChange}
+              required
+            />
+          )}
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          {!isLogin && (
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+          )}
+          <button type="submit" className="auth-btn">
+            {isLogin ? "Login" : "Sign Up"}
+          </button>
+        </form>
+        <p className="toggle-text">
+          {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+          <span onClick={toggleForm}>
+            {isLogin ? "Sign Up" : "Login"}
+          </span>
+        </p>
+      </div>
+
+      {toast.show && (
+        <div className="toast">
+          {toast.message}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default LoginSignup;
