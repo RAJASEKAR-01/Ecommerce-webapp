@@ -44,10 +44,11 @@ function LoginSignup() {
         };
 
     try {
-      const res = await axios.post(
-        `http://localhost:5000/api/auth${endpoint}`,
-        data
-      );
+      
+        const res = await axios.post(
+          `${process.env.REACT_APP_API_URL}/api/auth${endpoint}`,
+          data
+         );
 
       // ✅ Save user info in localStorage
       localStorage.setItem("user", JSON.stringify(res.data.user || res.data));
