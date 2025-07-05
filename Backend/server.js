@@ -5,12 +5,16 @@ const cors = require('cors');
 const PORT = process.env.PORT || 5000;
 
 console.log('Mongo URI:', process.env.MONGO_URL);
-
+const allowedOrigin = 'https://ecommerce-new-demo.vercel.app';
 const app = express();
-app.use(cors({
-  origin: 'https://ecommerce-new-demo.vercel.app/',
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: allowedOrigin,
+    credentials: true,                  // if you use cookies / auth headers
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 app.use(express.json());
 
 app.use('/api/auth', require('./routes/auth'));
