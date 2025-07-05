@@ -8,7 +8,7 @@ console.log('Mongo URI:', process.env.MONGO_URL);
 
 const app = express();
 app.use(cors({
-  origin: 'https://ecommerce-new-demo.vercel.app/', // replace with your actual frontend URL
+  origin: 'https://ecommerce-new-demo.vercel.app/',
   credentials: true
 }));
 app.use(express.json());
