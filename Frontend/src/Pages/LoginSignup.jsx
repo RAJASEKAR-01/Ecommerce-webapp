@@ -15,7 +15,15 @@ function LoginSignup() {
   const [toast, setToast] = useState({ show: false, message: "" });
   const navigate = useNavigate();
 
-  const toggleForm = () => setIsLogin(!isLogin);
+  const toggleForm = () => {
+    setIsLogin(!isLogin);
+    setFormData({
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: ""
+    });
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,15 +31,32 @@ function LoginSignup() {
 
   const showToast = (msg) => {
     setToast({ show: true, message: msg });
-    setTimeout(() => setToast({ show: false, message: "" }), 2000);
+    setTimeout(() => setToast({ show: false, message: "" }), 2500);
+  };
+
+  const isValidPassword = (password) => {
+    const regex = /^(?=.*[0-9]).{8,}$/;
+    return regex.test(password);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!isLogin && formData.password !== formData.confirmPassword) {
-      showToast("Passwords do not match");
-      return;
+    if (!isLogin) {
+      if (!formData.fullName.trim()) {
+        showToast("Full name is required");
+        return;
+      }
+
+      if (!isValidPassword(formData.password)) {
+        showToast("Password must be at least 8 characters and include a number");
+        return;
+      }
+
+      if (formData.password !== formData.confirmPassword) {
+        showToast("Passwords do not match");
+        return;
+      }
     }
 
     const endpoint = isLogin ? "/login" : "/signup";
@@ -44,15 +69,12 @@ function LoginSignup() {
         };
 
     try {
-      
-        const res = await axios.post(
-          `${process.env.REACT_APP_API_URL}/api/auth${endpoint}`,
-          data
-         );
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/auth${endpoint}`,
+        data
+      );
 
-      // ✅ Save user info in localStorage
       localStorage.setItem("user", JSON.stringify(res.data.user || res.data));
-      
 
       showToast(isLogin ? "Login successful" : "Signup successful");
 
@@ -60,10 +82,9 @@ function LoginSignup() {
         navigate("/");
       }, 1500);
     } catch (error) {
-      showToast(error.response?.data?.message || "Error");
+      showToast(error.response?.data?.message || "Something went wrong");
     }
   };
-  
 
   return (
     <div className="auth-container">
@@ -118,11 +139,7 @@ function LoginSignup() {
         </p>
       </div>
 
-      {toast.show && (
-        <div className="toast">
-          {toast.message}
-        </div>
-      )}
+      {toast.show && <div className="toast">{toast.message}</div>}
     </div>
   );
 }
