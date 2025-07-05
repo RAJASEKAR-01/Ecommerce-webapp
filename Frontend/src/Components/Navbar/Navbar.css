@@ -97,12 +97,12 @@
     align-items: center;
     justify-content: space-evenly;
     position: relative;
-    width: 90px;
+    width: 150px;
   }
   .cartcount {
-    position: absolute;
+    position: relative;
     top: -5px;
-    right: -0px;
+    right: 0px ;
     background-color: #fe4c4c;
     color: white;
     font-size: 10px;
@@ -112,6 +112,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .Cart-box{
+    width:50px;
+    display: flex;
   }
   
   /* Responsive Styles */

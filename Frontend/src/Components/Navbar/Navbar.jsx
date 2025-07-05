@@ -160,7 +160,7 @@ export const Navbar = () => {
             </Link>
           )}
           <Link to="/Cart">
-            <div>
+            <div className='Cart-box'>
               <img src={CartLogo} alt="cart" className='icon' />
               <div className="cartcount">{cartItems.length}</div>
             </div>
