@@ -1,16 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Furniture.css';                          // ← same folder
+import './Furniture.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faIndianRupeeSign } from '@fortawesome/free-solid-svg-icons';
-import SmartphonesDetails from '../../Data/product.js'; // adjust path if needed
+import SmartphonesDetails from '../../Data/product.js';
 
-/** ----------------------------------------------------------------
- *  Furniture (generic product‑grid) component
- *  Props:
- *    • category  – string ('all' to show everything)
- *    • offerss   – string (show items with this offer tag)
- *  ----------------------------------------------------------------*/
 function Furniture({ category = 'all', offerss = '' }) {
   const products = SmartphonesDetails.filter(
     (p) =>
@@ -20,32 +14,32 @@ function Furniture({ category = 'all', offerss = '' }) {
   );
 
   return (
-    <section className="grid">
+    <section className="product-grid">
       {products.map((phone) => (
-        <article className="card" key={phone.id}>
-          <Link
-            to={`/product/${phone.id}`}
-            state={{ phone }}
-            className="card__link"
-          >
-            <img src={phone.image} alt={phone.name} className="card__img" />
-
-            <div className="card__body">
-              <h3 className="card__title">{phone.name}</h3>
-              <p className="card__desc">
-                {phone.description.slice(0, 60)}…
-              </p>
-
-              <div className="card__priceRow">
-                <span className="card__offer">{phone.offer}</span>
-                <span className="card__price">
-                  <FontAwesomeIcon icon={faIndianRupeeSign} />{' '}
-                  {phone.price.toLocaleString()}
-                </span>
+        <div className="product-card" key={phone.id}>
+          <Link to={`/product/${phone.id}`} state={{ phone }} className="card-link">
+            <div className="image-container">
+              <img src={phone.image} alt={phone.name} />
+            </div>
+            <div className="product-info">
+              <p className="sponsored">Sponsored</p>
+              <p className="tag">#{phone.category}</p>
+              <h3 className="product-name">{phone.name}</h3>
+              <div className="price-row">
+                <p className="discount">
+                  <span className="cut">₹{phone.price}</span>{' '}
+                  <strong>₹{phone.discountedPrice}</strong>{' '}
+                  <span className="percent">({Math.round(((phone.price - phone.discountedPrice) / phone.price) * 100)}% off)</span>
+                </p>
+                <p className="wow-tag">WOW</p>
               </div>
+              <p className="rating">
+                ⭐ 4.3 <span className="green-badge">spoyl</span>
+              </p>
+              <p className="delivery">Delivery by 11 PM, Tomorrow</p>
             </div>
           </Link>
-        </article>
+        </div>
       ))}
     </section>
   );
